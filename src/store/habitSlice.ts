@@ -33,6 +33,20 @@ const habitSlice = createSlice({
       goal: 1,
       time: "morning",
     },
+    {
+      id: 4,
+      name: "Exercise",
+      repeat: "daily",
+      goal: 1,
+      time: "morning",
+    },
+    {
+      id: 5,
+      name: "Meditate",
+      repeat: "daily",
+      goal: 1,
+      time: "morning",
+    }
   ],
   reducers: {
     addHabit: (state: Habit[], action) => {
