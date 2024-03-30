@@ -40,7 +40,7 @@ const HabitsContainer = () => {
       );
       // Update state with habits containing images
       setHabitsWithImages(updatedHabits);
-      setLoading(false); // Set loading to false after fetching images
+      setLoading(false);
     };
 
     updateHabitsWithImages();
@@ -72,6 +72,7 @@ const HabitsContainer = () => {
                 habit={habit}
                 onDetailsClick={() => handleDetailsClick(habit)}
                 imageUrl={habit.imageUrl || ""}
+                onDeleteClick={() => handleDeleteHabit(habit)}
               />
             ))}
       </div>
