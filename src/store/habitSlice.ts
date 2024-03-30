@@ -6,6 +6,7 @@ export interface Habit {
   repeat: string;
   goal: number;
   time: string;
+  imageUrl?: string | undefined;
 }
 
 const habitSlice = createSlice({
@@ -34,12 +35,15 @@ const habitSlice = createSlice({
     },
   ],
   reducers: {
-    addHabit: (state: unknown[], action) => {
+    addHabit: (state: Habit[], action) => {
       state.push(action.payload);
+    },
+    deleteHabit: (state: Habit[], action) => {
+      return state.filter((habit: Habit) => habit.id !== action.payload);
     },
   },
 });
 
-export const { addHabit } = habitSlice.actions;
+export const { addHabit, deleteHabit } = habitSlice.actions;
 
 export default habitSlice.reducer;

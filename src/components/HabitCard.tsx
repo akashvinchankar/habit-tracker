@@ -1,32 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Habit } from "../store/habitSlice";
 
 interface HabitCardProps {
   habit: Habit;
   onDetailsClick: () => void;
+  imageUrl: string;
 }
 
-const HabitCard: React.FC<HabitCardProps> = ({ habit, onDetailsClick }) => {
-  const [imageUrl, setImageUrl] = useState<string>("");
-
-  useEffect(() => {
-    const fetchRandomImage = async () => {
-      try {
-        const response = await fetch(
-          "https://source.unsplash.com/random/400x300"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch image");
-        }
-        setImageUrl(response.url);
-      } catch (error) {
-        console.error("Error fetching image:", error);
-      }
-    };
-
-    fetchRandomImage();
-  }, []);
-
+const HabitCard: React.FC<HabitCardProps> = ({
+  habit,
+  onDetailsClick,
+  imageUrl,
+}) => {
   const { name } = habit;
 
   return (
