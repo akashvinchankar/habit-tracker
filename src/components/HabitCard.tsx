@@ -1,20 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Habit } from "../store/habitSlice";
 
 interface HabitCardProps {
   habit: Habit;
+  onDetailsClick: () => void;
 }
 
-const HabitCard: React.FC<HabitCardProps> = ({ habit }) => {
-  const { name, repeat, goal, time } = habit;
+const HabitCard: React.FC<HabitCardProps> = ({ habit, onDetailsClick }) => {
+  const [imageUrl, setImageUrl] = useState<string>("");
+
+  useEffect(() => {
+    const fetchRandomImage = async () => {
+      try {
+        const response = await fetch(
+          "https://source.unsplash.com/random/400x300"
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch image");
+        }
+        setImageUrl(response.url);
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    };
+
+    fetchRandomImage();
+  }, []);
+
+  const { name } = habit;
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{name}</div>
-        <div className="text-gray-700 text-base mb-2">Repeat: {repeat}</div>
-        <div className="text-gray-700 text-base mb-2">Goal: {goal} times</div>
-        <div className="text-gray-700 text-base">Time: {time}</div>
+    <div
+      className="max-w-xs rounded-lg overflow-hidden shadow-md bg-white cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
+      onClick={onDetailsClick}
+    >
+      <img src={imageUrl} alt={name} className="w-full h-40 object-cover" />
+      <div className="p-4">
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">{name}</h2>
       </div>
     </div>
   );
