@@ -1,4 +1,16 @@
+import { useDispatch } from "react-redux";
+import { addHabit } from "../store/habitSlice";
+import { useState } from "react";
+
 const AddHabitModal = () => {
+  const [habit, setHabit] = useState({
+    name: "",
+    repeat: "",
+    goal: "",
+    time: "",
+  });
+  const dispatch = useDispatch();
+
   return (
     <>
       <form
@@ -14,6 +26,8 @@ const AddHabitModal = () => {
               className="w-full border border-gray-300 p-2 rounded mt-2"
               type="text"
               id="name"
+              value={habit.name}
+              onChange={(e) => setHabit({ ...habit, name: e.target.value })}
             />
           </div>
           <div className="flex justify-between items-center mt-4">
@@ -29,6 +43,8 @@ const AddHabitModal = () => {
                 className="w-full border border-gray-300 p-2 rounded mt-2"
                 name="repeat"
                 id="repeat"
+                value={habit.repeat}
+                onChange={(e) => setHabit({ ...habit, repeat: e.target.value })}
               >
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
@@ -47,6 +63,8 @@ const AddHabitModal = () => {
                 className="w-full border border-gray-300 p-2 rounded mt-2"
                 name="goal"
                 id="goal"
+                value={habit.goal}
+                onChange={(e) => setHabit({ ...habit, goal: e.target.value })}
               >
                 <option value="1">1 time a day</option>
                 <option value="2">2 times a day</option>
@@ -97,14 +115,30 @@ const AddHabitModal = () => {
           {/* Discard */}
           <button
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
-            onClick={() => console.log("Discard")}
+            onClick={() =>
+              setHabit({
+                name: "",
+                repeat: "",
+                goal: "",
+                time: "",
+              })
+            }
           >
             Discard
           </button>
           {/* Save */}
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-            onClick={() => console.log("Save")}
+            onClick={() =>
+              dispatch(
+                addHabit({
+                  name: "Drink Water",
+                  repeat: "daily",
+                  goal: 8,
+                  time: "morning",
+                })
+              )
+            }
           >
             Save
           </button>
